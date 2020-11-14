@@ -4,7 +4,9 @@
 var React = require("react");
 
 function Hello(Props) {
-  return React.createElement("div", undefined, "Hello thomas");
+  return React.createElement("div", {
+              className: "text-primary-100"
+            }, "Hello thomas");
 }
 
 var make = Hello;
