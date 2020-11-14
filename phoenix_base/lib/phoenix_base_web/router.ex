@@ -5,6 +5,11 @@ defmodule PhoenixBaseWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :nextjs do
+    plug :accepts, ["html"]
+    plug :put_secure_browser_headers
+  end
+
   scope "/api", PhoenixBaseWeb do
     pipe_through :api
 
@@ -26,4 +31,10 @@ defmodule PhoenixBaseWeb.Router do
       live_dashboard "/dashboard", metrics: PhoenixBaseWeb.Telemetry
     end
   end
+
+  # scope "/" do
+  #   pipe_through [:nextjs]
+
+  #   get "/*path", ReverseProxy, upstream: [Application.fetch_env!(:phoenix_base, :node_server)]
+  # end
 end

@@ -23,6 +23,8 @@ config :phoenix_base, PhoenixBase.Repo,
     versions: [:"tlsv1.2"]
   ]
 
+config :phoenix_base, node_server: "http://localhost:3000"
+
 # Configures the endpoint
 config :phoenix_base, PhoenixBaseWeb.Endpoint,
   url: [host: "localhost"],

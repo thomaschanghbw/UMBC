@@ -33,6 +33,7 @@ defmodule PhoenixBase.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:corsica, "~> 1.0", only: [:dev]},
       {:phoenix, "~> 1.5.0"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
