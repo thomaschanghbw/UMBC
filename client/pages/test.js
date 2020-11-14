@@ -15,5 +15,13 @@ export default function Test(props) {
     f();
   }, []);
 
-  return <div> TESTING</div>;
+  return (
+    <div className="flex flex-col w-64 bg-red-300 justify-center items-center">
+      <div className="flex justify-center items-center">
+        <div>TESTING</div>
+      </div>
+      <div>TESTING</div>
+      <div>TESTING</div>
+    </div>
+  );
 }

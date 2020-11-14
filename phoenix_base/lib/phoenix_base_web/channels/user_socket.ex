@@ -3,6 +3,7 @@ defmodule PhoenixBaseWeb.UserSocket do
 
   ## Channels
   # channel "room:*", PhoenixBaseWeb.RoomChannel
+  channel "meet:lobby", PhoenixBaseWeb.MeetChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
