@@ -1,0 +1,11 @@
+@layer utilities {
+    @keyframes example {
+      to {background-color: yellow;}
+    }
+
+    .go {
+      animation-name: example;
+      animation-duration: 0.5s;
+      animation-fill-mode: forwards;
+    }
+}
