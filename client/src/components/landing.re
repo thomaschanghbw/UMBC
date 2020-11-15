@@ -22,7 +22,7 @@ let make = (~onSubmit) => {
 
 //         </div>
         <div className="m-auto bg-white border border-solid border-black min-w-landing max-w-landing p-8">
-        <form className="flex flex-col justify-center w-full " onSubmit={e => onSubmit(e, {name: userName, hobbies: [], status: "sup"})}>
+        <form className="flex flex-col justify-center w-full " onSubmit={e => onSubmit(e, {name: userName, hobbies: [], status: "searching"})}>
             <div className="mx-auto mb-6">
                 <label className="block text-center"> {React.string("What is your name?")} </label> 
                 <input className="border border-solid border-black rounded-md" type_="text" name="name" value=userName onChange={target => setUserName(target->ReactEvent.Form.target##value)}/>

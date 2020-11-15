@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useCallback } from "react";
 import { Socket, Presence } from "phoenix";
 import { nanoid } from "nanoid";
 import PropTypes from "prop-types";
+import { useRouter } from "next/router";
 
 import conf from "conf";
 import SocketContext from "./SocketContext";
@@ -19,6 +20,7 @@ export default function SocketProvider(props) {
   const [presence, setPresence] = useState([]);
   const [status, setStatus] = useState({});
   const [room, setRoom] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const newUid = nanoid(6);
@@ -79,12 +81,19 @@ export default function SocketProvider(props) {
   useEffect(() => {
     if (myChannel) {
       myChannel.on("new_room", (payload) => {
-        debug("new_room PERSONAL", payload);
+        debug("new_room PERSONAL :", payload);
+        setRoom(payload);
       });
 
       return () => myChannel.off("new_room");
     }
   }, [myChannel]);
+
+  useEffect(() => {
+    if (room) {
+      router.push("/dinner");
+    }
+  }, [room]);
 
   // if (!socket) {
   //   return <Loading />;

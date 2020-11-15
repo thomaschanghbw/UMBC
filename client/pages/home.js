@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import App from "../src/components/app.bs";
 import SocketContext from "src/contexts/SocketContext";
-const debug = require("debug")("app:Test");
+const debug = require("debug")("app:Home");
 
-Test.propTypes = {};
+Home.propTypes = {};
 
-export default function Test(props) {
-  const { updateSelf } = useContext(SocketContext);
+export default function Home(props) {
+  const { updateSelf, hasRoom } = useContext(SocketContext);
 
   return (
     <div className="w-full h-screen overflow-hidden font-space">
-        <App onFormSubmit={updateSelf}/>
+      <App onFormSubmit={updateSelf} hasRoom={hasRoom} />
     </div>
   );
 }

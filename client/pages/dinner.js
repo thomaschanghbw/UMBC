@@ -3,15 +3,16 @@ import PropTypes from "prop-types";
 
 import Tray from "src/components/Tray";
 import Call from "src/components/Call";
+import DailyProvider from "src/contexts/DailyProvider";
 
-const debug = require("debug")("app:Home");
+const debug = require("debug")("app:Dinner");
 
-Home.propTypes = {};
+Dinner.propTypes = {};
 
-export default function Home(props) {
+export default function Dinner(props) {
   return (
-    // master div //
     <div className="h-screen w-screen">
+      {/* // master div // */}
       {/* header/prompt/body/tray master div */}
       <div className="flex flex-col h-full w-full">
         {/* header  */}

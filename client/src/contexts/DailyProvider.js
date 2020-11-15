@@ -67,13 +67,12 @@ export default function DailyProvider(props) {
         },
       });
       setCallObject(newCallObject);
-      curCallObject = newCallObject;
 
       setAppState(STATE_LOADING);
       dispatchCallState({ type: RESET_STATE }); //need to clear errors inbetween call join attempts
-      curCallObject
+      newCallObject
         .join({ url, userName: uid })
-        .then((s) => debug("Joining call", s))
+        .then((s) => debug(`Joined call ${url} with ${uid}`, s))
         .catch((err) => {
           console.error("Joining call", err);
         });
@@ -111,6 +110,7 @@ export default function DailyProvider(props) {
 
     function handleNewMeetingState(event) {
       if (event) {
+        debug("NEW STATE", event.action);
         switch (event.action) {
           case "started-camera":
             setAppState(STATE_JOINING);
@@ -163,13 +163,13 @@ export default function DailyProvider(props) {
 
     function handleNewParticipantsState(event) {
       if (event) {
-        logDailyEvent(event);
+        debug("P STATE", event.action);
 
         const participant = event.participant;
         if (participant.user_name) {
           debug("Update", event, participant);
           const id =
-            participant.user_name === user.id ? "local" : participant.user_name;
+            participant.user_name === uid ? "local" : participant.user_name;
           const callItem = {
             id,
             audioTrack: participant.audioTrack,
@@ -201,7 +201,7 @@ export default function DailyProvider(props) {
         callObject.off(event, handleNewParticipantsState);
       }
     };
-  }, [callObject, dispatchCallState, user.id]);
+  }, [callObject, dispatchCallState, uid]);
 
   /*************
    * ERRORS
