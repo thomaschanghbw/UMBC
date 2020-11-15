@@ -1,8 +1,8 @@
 //Urls should not have trailing slash
 module.exports = {
   NAME: "React Client",
-  SOCKET_URL: "ws://localhost:4000/socket",
-  SERVER_URL: "http://localhost:4000",
+  SOCKET_URL: "wss://a5b341b6c59d.ngrok.io/socket",
+  SERVER_URL: "https://a5b341b6c59d.ngrok.io",
   CLIENT_URL: "http://localhost:3000",
   SENTRY_DNS: "",
   GOOGLE_CLIENT_ID:

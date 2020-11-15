@@ -25,6 +25,7 @@ export default function SocketProvider(props) {
   useEffect(() => {
     const newUid = nanoid(6);
     setUid(newUid);
+    debug("USING SOCKET", conf.get("SOCKET_URL"));
     const newSocket = new Socket(conf.get("SOCKET_URL"), {
       params: { user_id: newUid },
     });
