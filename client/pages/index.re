@@ -2,8 +2,8 @@
 let make = () => {
     let (isLoading, setIsLoading) = React.useState(_ => false);
 
-    <Page>
-        <App/>
-    </Page>
+    <div className="w-full h-screen overflow-hidden font-space">
+        // <App/>
+    </div>
 }
 let default = make;

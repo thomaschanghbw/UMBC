@@ -3,3 +3,5 @@
 @tailwind utilities;
 
 @import "buttons.css"; 
+@import "fonts.css";
+@import "landingBg.css";

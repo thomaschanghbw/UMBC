@@ -4,15 +4,15 @@ type siteView =
   | Loading;
 
 [@react.component]
-let make = () => {
+let make = (~onFormSubmit) => {
   let (view, setView) = React.useState(_ => Landing);
   // const { startSearch } = useContext(SocketContext);
 
-  let onSubmit = (e: ReactEvent.Form.t): unit => {
+  let onSubmit = (e: ReactEvent.Form.t, p: Landing.person): unit => {
     ReactEvent.Form.preventDefault(e);
     /* code to run on submit */
     setView(_ => Loading);
-    Js.log("HIII");
+    onFormSubmit(p);
   };
 
   <>

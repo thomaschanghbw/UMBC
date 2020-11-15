@@ -7,18 +7,18 @@ var Landing$MyBlog = require("./landing.bs.js");
 var LoadingScreen$MyBlog = require("./loadingScreen.bs.js");
 
 function App(Props) {
+  var onFormSubmit = Props.onFormSubmit;
   var match = React.useState(function () {
         return /* Landing */0;
       });
   var setView = match[1];
   var view = match[0];
-  var onSubmit = function (e) {
+  var onSubmit = function (e, p) {
     e.preventDefault();
     Curry._1(setView, (function (param) {
             return /* Loading */2;
           }));
-    console.log("HIII");
-    
+    return Curry._1(onFormSubmit, p);
   };
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
                   className: view !== 0 ? "hidden" : ""

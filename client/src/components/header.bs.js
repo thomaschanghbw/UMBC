@@ -5,8 +5,12 @@ var React = require("react");
 
 function Header(Props) {
   return React.createElement("div", {
-              className: "text-primary-100"
-            }, "I'm a header look at me");
+              className: "w-full py-12 text-lightgray flex flex-col items-center bg-secondary-500 justify-center"
+            }, React.createElement("div", {
+                  className: "inline-block text-5xl"
+                }, "Dinner for 12 Strangers"), React.createElement("div", {
+                  className: "inline-block"
+                }, "Come and Eat with Other People!"));
 }
 
 var make = Header;

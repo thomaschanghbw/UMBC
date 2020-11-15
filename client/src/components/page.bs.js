@@ -6,7 +6,7 @@ var React = require("react");
 function Page(Props) {
   var children = Props.children;
   return React.createElement("div", {
-              className: "w-full h-screen bg-pink-200 px-12"
+              className: "w-full h-screen px-12 py-12 bg-primary-500"
             }, children);
 }
 
