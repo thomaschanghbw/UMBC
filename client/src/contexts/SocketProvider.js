@@ -14,9 +14,11 @@ SocketProvider.propTypes = {
 export default function SocketProvider(props) {
   const [uid, setUid] = useState(null);
   const [socket, setSocket] = useState(null);
+  const [meetChannel, setMeetChannel] = useState(null);
   const [myChannel, setMyChannel] = useState(null);
   const [presence, setPresence] = useState([]);
   const [status, setStatus] = useState({});
+  const [room, setRoom] = useState(null);
 
   useEffect(() => {
     const newUid = nanoid(6);
@@ -27,12 +29,11 @@ export default function SocketProvider(props) {
     setSocket(newSocket);
     newSocket.connect();
     debug("Connected to Socket");
-    const newMyChannel = newSocket.channel(`meet:lobby`, {});
-    const presence = new Presence(newMyChannel);
-
-    newMyChannel.join().receive("ok", () => {
-      debug("Joined MyChannel");
-      setMyChannel(newMyChannel);
+    const newMeetChannel = newSocket.channel(`meet:lobby`, {});
+    const presence = new Presence(newMeetChannel);
+    newMeetChannel.join().receive("ok", () => {
+      debug("Joined MeetChannel");
+      setMeetChannel(newMeetChannel);
     });
 
     function updatePList(presence) {
@@ -44,6 +45,12 @@ export default function SocketProvider(props) {
     //only one onsync handler allowed
     presence.onSync(() => updatePList(presence));
     updatePList(presence);
+
+    const newMyChannel = newSocket.channel(`user:${newUid}`, {});
+    newMyChannel.join().receive("ok", () => {
+      debug("Joined MyChannel");
+      setMyChannel(newMyChannel);
+    });
 
     return () => {
       newSocket.disconnect(() => debug("Disconnect from old socket"));
@@ -66,12 +73,22 @@ export default function SocketProvider(props) {
   }
 
   useEffect(() => {
-    if (myChannel) {
-      myChannel.push("update_self", status).receive("ok", (resp) => {
+    if (meetChannel && status) {
+      meetChannel.push("update_self", status).receive("ok", (resp) => {
         debug("UPDATED_SELF", resp);
       });
     }
-  }, [status]);
+  }, [status, meetChannel]);
+
+  useEffect(() => {
+    if (myChannel) {
+      myChannel.on("new_room", (payload) => {
+        debug("new_room PERSONAL", payload);
+      });
+
+      return () => myChannel.off("new_room");
+    }
+  }, [myChannel]);
 
   // if (!socket) {
   //   return <Loading />;

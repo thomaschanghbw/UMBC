@@ -3,6 +3,11 @@ defmodule PhoenixBaseWeb.MeetChannel do
   require Logger
 
   alias PhoenixBaseWeb.Presence
+  alias PhoenixBaseWeb.Helpers.PresenceHelper
+  alias PhoenixBaseWeb.Helpers.DailyHelper
+  alias PhoenixBaseWeb.Endpoint
+
+  @group_size 2
 
   @impl true
   def join("meet:lobby", _payload, socket) do
@@ -16,9 +21,9 @@ defmodule PhoenixBaseWeb.MeetChannel do
 
     # PRESENCE
     data = %{
-          online_at: inspect(System.system_time(:second)),
-          status: "idle"
-        }
+      online_at: inspect(System.system_time(:second)),
+      status: "idle"
+    }
 
     Presence.track(socket, user_id, data)
     pList = Presence.list(socket)
@@ -30,11 +35,25 @@ defmodule PhoenixBaseWeb.MeetChannel do
   def handle_info(:try_matchmaking, socket) do
     user_id = socket.assigns.user_id
 
-    pList = Presence.list(socket)
-    Logger.info("PLIST #{inspect(pList)}")
+    freeAgents = PresenceHelper.getFreeAgentIDs(socket)
+    Logger.warn("#{user_id} FOUND AGENTS #{inspect(freeAgents)}")
+
+    # if Enum.count(freeAgents) >= @group_size do
+    Logger.debug("#{user_id} founded agents")
+    dailyRoom = DailyHelper.create_room()
+    Endpoint.broadcast!("user:#{user_id}", "new_room", dailyRoom)
+
+    freeAgents
+    |> Enum.take(3)
+    |> Enum.each(fn fa ->
+      Logger.debug("BROADCAST TO #{fa}")
+      Endpoint.broadcast!("user:#{fa}", "new_room", dailyRoom)
+    end)
+
+    # end
+
     {:noreply, socket}
   end
-
 
   @impl true
   def handle_in("update_self", body, socket) do
@@ -46,7 +65,7 @@ defmodule PhoenixBaseWeb.MeetChannel do
         socket.assigns.user_id,
         &(Map.merge(&1, body) |> Map.put(:online_at, now))
       )
-    
+
     if Map.get(body, "status") === "searching" do
       send(self(), :try_matchmaking)
     end
@@ -65,7 +84,7 @@ defmodule PhoenixBaseWeb.MeetChannel do
   # broadcast to everyone in the current topic (meet:lobby).
   @impl true
   def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
+    broadcast(socket, "shout", payload)
     {:noreply, socket}
   end
 end

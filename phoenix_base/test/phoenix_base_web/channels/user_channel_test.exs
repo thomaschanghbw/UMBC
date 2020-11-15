@@ -1,11 +1,11 @@
-defmodule PhoenixBaseWeb.MeetChannelTest do
+defmodule PhoenixBaseWeb.UserChannelTest do
   use PhoenixBaseWeb.ChannelCase
 
   setup do
     {:ok, _, socket} =
       PhoenixBaseWeb.UserSocket
       |> socket("user_id", %{some: :assign})
-      |> subscribe_and_join(PhoenixBaseWeb.MeetChannel, "meet:lobby")
+      |> subscribe_and_join(PhoenixBaseWeb.UserChannel, "user:lobby")
 
     %{socket: socket}
   end
@@ -15,7 +15,7 @@ defmodule PhoenixBaseWeb.MeetChannelTest do
     assert_reply ref, :ok, %{"hello" => "there"}
   end
 
-  test "shout broadcasts to meet:lobby", %{socket: socket} do
+  test "shout broadcasts to user:lobby", %{socket: socket} do
     push(socket, "shout", %{"hello" => "all"})
     assert_broadcast "shout", %{"hello" => "all"}
   end

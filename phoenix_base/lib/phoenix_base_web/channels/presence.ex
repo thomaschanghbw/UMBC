@@ -5,6 +5,7 @@ defmodule PhoenixBaseWeb.Presence do
   See the [`Phoenix.Presence`](http://hexdocs.pm/phoenix/Phoenix.Presence.html)
   docs for more details.
   """
-  use Phoenix.Presence, otp_app: :phoenix_base,
-                        pubsub_server: PhoenixBase.PubSub
+  use Phoenix.Presence,
+    otp_app: :phoenix_base,
+    pubsub_server: PhoenixBase.PubSub
 end
