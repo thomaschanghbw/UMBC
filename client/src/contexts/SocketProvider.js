@@ -61,6 +61,10 @@ export default function SocketProvider(props) {
     });
   }
 
+  function startSearch(name, hobbies) {
+    updateSelf({ status: "searching", name, hobbies });
+  }
+
   useEffect(() => {
     if (myChannel) {
       myChannel.push("update_self", status).receive("ok", (resp) => {
@@ -78,6 +82,7 @@ export default function SocketProvider(props) {
         socket,
         myChannel,
         updateSelf,
+        startSearch,
       }}
     >
       {props.children}
