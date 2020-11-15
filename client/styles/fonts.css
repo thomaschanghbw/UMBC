@@ -1,0 +1,11 @@
+
+@font-face {
+    font-family: SpaceMono;
+    src: url(../public/space_mono/SpaceMono-Regular.ttf);
+  }
+
+@font-face {
+    font-family: SpaceMono;
+    src: url(../public/space_mono/SpaceMono-Bold.ttf);
+    font-weight: bold; 
+  }

@@ -13,8 +13,8 @@ function CheckButton(Props) {
   var setIsChecked = match[1];
   var isChecked = match[0];
   return React.createElement("div", {
-              className: "cursor-pointer " + (
-                isChecked ? "go" : "bg-blue-200"
+              className: "px-6 py-2 rounded-md cursor-pointer " + (
+                isChecked ? "go" : "bg-button-500"
               ),
               onClick: (function (param) {
                   return Curry._1(setIsChecked, (function (param) {

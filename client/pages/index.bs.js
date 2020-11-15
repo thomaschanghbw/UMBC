@@ -2,15 +2,13 @@
 'use strict';
 
 var React = require("react");
-var App$MyBlog = require("../src/components/app.bs.js");
-var Page$MyBlog = require("../src/components/page.bs.js");
 
 function Index(Props) {
   React.useState(function () {
         return false;
       });
-  return React.createElement(Page$MyBlog.make, {
-              children: React.createElement(App$MyBlog.make, {})
+  return React.createElement("div", {
+              className: "w-full h-screen overflow-hidden font-space"
             });
 }
 
