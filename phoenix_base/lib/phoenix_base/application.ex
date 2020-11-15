@@ -14,7 +14,8 @@ defmodule PhoenixBase.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: PhoenixBase.PubSub},
       # Start the Endpoint (http/https)
-      PhoenixBaseWeb.Endpoint
+      PhoenixBaseWeb.Endpoint,
+      PhoenixBaseWeb.Presence
       # Start a worker by calling: PhoenixBase.Worker.start_link(arg)
       # {PhoenixBase.Worker, arg}
     ]

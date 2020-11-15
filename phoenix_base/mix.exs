@@ -34,6 +34,7 @@ defmodule PhoenixBase.MixProject do
   defp deps do
     [
       {:corsica, "~> 1.0", only: [:dev]},
+      {:httpoison, "~> 1.7"},
       {:phoenix, "~> 1.5.0"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},

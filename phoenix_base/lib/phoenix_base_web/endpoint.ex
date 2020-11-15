@@ -48,8 +48,10 @@ defmodule PhoenixBaseWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  if Mix.env == :dev do
+
+  if Mix.env() == :dev do
     plug Corsica, origins: ["http://localhost:3000", "http://0.0.0.0:4000"]
   end
+
   plug PhoenixBaseWeb.Router
 end

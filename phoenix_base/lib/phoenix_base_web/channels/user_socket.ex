@@ -3,6 +3,8 @@ defmodule PhoenixBaseWeb.UserSocket do
 
   ## Channels
   # channel "room:*", PhoenixBaseWeb.RoomChannel
+  channel "meet:lobby", PhoenixBaseWeb.MeetChannel
+  channel "user:*", PhoenixBaseWeb.UserChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -16,8 +18,8 @@ defmodule PhoenixBaseWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   @impl true
-  def connect(_params, socket, _connect_info) do
-    {:ok, socket}
+  def connect(params, socket, _connect_info) do
+    {:ok, assign(socket, :user_id, params["user_id"])}
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:

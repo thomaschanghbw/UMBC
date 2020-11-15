@@ -41,6 +41,9 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :phoenix_base,
+  daily_api: "d973f2b982953d4f582a8f6b5c25cdc04564e902301fa6554964d999d2c5f2c5"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

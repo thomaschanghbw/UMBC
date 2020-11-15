@@ -1,6 +1,7 @@
 //Urls should not have trailing slash
 module.exports = {
   NAME: "React Client",
+  SOCKET_URL: "ws://localhost:4000/socket",
   SERVER_URL: "http://localhost:4000",
   CLIENT_URL: "http://localhost:3000",
   SENTRY_DNS: "",
