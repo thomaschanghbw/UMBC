@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
+import MicButton from "src/components/Buttons/MicButton";
+import CamButton from "src/components/Buttons/CamButton";
+import LeaveButton from "src/components/Buttons/LeaveButton";
 const debug = require("debug")("app:Icebreakers");
 
 Icebreakers.propTypes = {};
@@ -35,16 +38,31 @@ export default function Icebreakers(props) {
     setQns(generator());
   }
   return (
-    <div className="flex items-center flex-col">
+    <div className="flex items-center justify-around flex-col">
+      <div className="w-4 h-16" />
+
       {/* table */}
-      <div className="flex h-64 w-64 rounded-full bg-yellow-600 items-center justify-center">
-        <div className="flex text-lg py-3 px-3 text-center rounded-lg bg-white">
-          {qns}
+      <div>
+        <div className="flex h-64 w-64 rounded-full bg-yellow-600 items-center justify-center">
+          <div className="flex text-lg py-3 px-3 text-center rounded-lg bg-white">
+            {qns}
+          </div>
+        </div>
+        {/* generate new qns button */}
+        <div
+          className="my-5 py-4 px-3 self-center text-lg rounded-lg bg-green-500 hover:bg-green-600 cursor-pointer text-center"
+          onClick={newQns}
+        >
+          Generate New Question
         </div>
       </div>
-      {/* generate new qns button */}
-      <div className="flex my-5 py-4 px-3 w-auto self-center text-lg rounded-lg bg-green-500">
-        <button onClick={newQns}>Generate New Question</button>
+
+      <div className="flex justify-between w-full">
+        <div className="flex">
+          <MicButton />
+          <CamButton />
+        </div>
+        <LeaveButton />
       </div>
     </div>
   );

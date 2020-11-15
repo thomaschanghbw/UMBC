@@ -25,18 +25,8 @@ export default function Dinner(props) {
           </div>
         </div>
 
-        {/* prompt */}
-        <div className="flex w-full justify-center bg-blue-300">
-          <div className="my-5 w-1/5 py-3 text-center bg-white text-lg rounded-lg">
-            "Everybody here likes _______."
-          </div>
-        </div>
-
         {/* body */}
         <Call />
-
-        {/* tray */}
-        <Tray />
       </div>
     </div>
   );

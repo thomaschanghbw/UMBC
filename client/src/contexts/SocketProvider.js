@@ -40,7 +40,6 @@ export default function SocketProvider(props) {
 
     function updatePList(presence) {
       const pList = presence.list();
-      debug("PLIST", pList);
       setPresence(pList);
     }
 
@@ -66,6 +65,7 @@ export default function SocketProvider(props) {
       Object.entries(payload).map(([k, v]) => {
         status[k] = v;
       });
+      status.id = uid;
       return { ...status };
     });
   }
@@ -92,6 +92,8 @@ export default function SocketProvider(props) {
   useEffect(() => {
     if (room) {
       router.push("/dinner");
+    } else {
+      router.push("/home");
     }
   }, [room]);
 
