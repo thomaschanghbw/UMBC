@@ -21,8 +21,8 @@ defmodule PhoenixBaseWeb.MeetChannel do
 
     # PRESENCE
     data = %{
-      online_at: inspect(System.system_time(:second)),
-      status: "idle"
+      "online_at" => inspect(System.system_time(:second)),
+      "status" => "idle"
     }
 
     Presence.track(socket, user_id, data)
@@ -38,19 +38,18 @@ defmodule PhoenixBaseWeb.MeetChannel do
     freeAgents = PresenceHelper.getFreeAgentIDs(socket)
     Logger.warn("#{user_id} FOUND AGENTS #{inspect(freeAgents)}")
 
-    # if Enum.count(freeAgents) >= @group_size do
-    Logger.debug("#{user_id} founded agents")
-    dailyRoom = DailyHelper.create_room()
-    Endpoint.broadcast!("user:#{user_id}", "new_room", dailyRoom)
+    if Enum.count(freeAgents) >= @group_size do
+      dailyRoom = DailyHelper.create_room()
+      Logger.debug("#{user_id} init room #{inspect(dailyRoom)}")
+      Endpoint.broadcast!("user:#{user_id}", "new_room", dailyRoom)
 
-    freeAgents
-    |> Enum.take(3)
-    |> Enum.each(fn fa ->
-      Logger.debug("BROADCAST TO #{fa}")
-      Endpoint.broadcast!("user:#{fa}", "new_room", dailyRoom)
-    end)
-
-    # end
+      freeAgents
+      |> Enum.take(3)
+      |> Enum.each(fn fa ->
+        Logger.debug("BROADCAST TO #{fa}")
+        Endpoint.broadcast!("user:#{fa}", "new_room", dailyRoom)
+      end)
+    end
 
     {:noreply, socket}
   end

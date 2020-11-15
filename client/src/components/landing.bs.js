@@ -31,7 +31,7 @@ function Landing(Props) {
                                   return Curry._2(onSubmit, e, {
                                               name: userName,
                                               hobbies: /* [] */0,
-                                              status: "sup"
+                                              status: "searching"
                                             });
                                 })
                             }, React.createElement("div", {

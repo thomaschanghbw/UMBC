@@ -7,7 +7,7 @@ defmodule PhoenixBaseWeb.Helpers.PresenceHelper do
     Presence.list(socket)
     |> Enum.filter(fn {k, %{metas: metas}} ->
       curMeta = getCurrentMeta(metas)
-      uid !== k && curMeta.status === "searching"
+      uid !== k && Map.get(curMeta, "status") === "searching"
     end)
     |> Enum.map(fn {k, %{metas: _metas}} -> k end)
   end
