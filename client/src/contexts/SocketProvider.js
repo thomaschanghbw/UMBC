@@ -68,10 +68,6 @@ export default function SocketProvider(props) {
     });
   }
 
-  function startSearch(name, hobbies) {
-    updateSelf({ status: "searching", name, hobbies });
-  }
-
   useEffect(() => {
     if (meetChannel && status) {
       meetChannel.push("update_self", status).receive("ok", (resp) => {
@@ -96,10 +92,13 @@ export default function SocketProvider(props) {
   return (
     <SocketContext.Provider
       value={{
+        uid,
         socket,
         myChannel,
+        meetChannel,
+        presence,
+        room,
         updateSelf,
-        startSearch,
       }}
     >
       {props.children}
