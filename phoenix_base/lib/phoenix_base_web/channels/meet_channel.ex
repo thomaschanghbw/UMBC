@@ -7,7 +7,7 @@ defmodule PhoenixBaseWeb.MeetChannel do
   alias PhoenixBaseWeb.Helpers.DailyHelper
   alias PhoenixBaseWeb.Endpoint
 
-  @group_size 2
+  @group_size 3
 
   @impl true
   def join("meet:lobby", _payload, socket) do
@@ -19,7 +19,7 @@ defmodule PhoenixBaseWeb.MeetChannel do
   def handle_info(:after_join, socket) do
     user_id = socket.assigns.user_id
 
-    # PRESENCE
+  # PRESENCE
     data = %{
       "online_at" => inspect(System.system_time(:second)),
       "status" => "idle"

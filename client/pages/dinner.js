@@ -18,11 +18,9 @@ export default function Dinner(props) {
         {/* header  */}
         <div className="flex flex-col items-center w-full font-extrabold h-1/5 bg-red-400">
           <div className="pt-4 pb-2 px-8 text-4xl text-white">
-            Dinner For 12 Strangers
+            Dinner For 4 Strangers
           </div>
-          <div className="pb-4 text-gray-200">
-            Come and eat with other people
-          </div>
+          <div className="pb-4 text-gray-200">Come and eat other people</div>
         </div>
 
         {/* body */}

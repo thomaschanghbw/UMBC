@@ -95,7 +95,7 @@ export default function SocketProvider(props) {
     if (room) {
       router.push("/dinner");
     } else {
-      // router.push("/home");
+      router.push("/home");
     }
   }, [room]);
 
