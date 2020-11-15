@@ -1,9 +1,57 @@
 defmodule PhoenixBaseWeb.MeetChannel do
   use PhoenixBaseWeb, :channel
+  require Logger
+
+  alias PhoenixBaseWeb.Presence
 
   @impl true
-  def join("meet:lobby", payload, socket) do
+  def join("meet:lobby", _payload, socket) do
+    send(self(), :after_join)
     {:ok, socket}
+  end
+
+  @impl true
+  def handle_info(:after_join, socket) do
+    user_id = socket.assigns.user_id
+
+    # PRESENCE
+    data = %{
+          online_at: inspect(System.system_time(:second)),
+          status: "idle"
+        }
+
+    Presence.track(socket, user_id, data)
+    pList = Presence.list(socket)
+    push(socket, "presence_state", pList)
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info(:try_matchmaking, socket) do
+    user_id = socket.assigns.user_id
+
+    pList = Presence.list(socket)
+    Logger.info("PLIST #{inspect(pList)}")
+    {:noreply, socket}
+  end
+
+
+  @impl true
+  def handle_in("update_self", body, socket) do
+    now = inspect(System.system_time(:second))
+
+    {:ok, _} =
+      Presence.update(
+        socket,
+        socket.assigns.user_id,
+        &(Map.merge(&1, body) |> Map.put(:online_at, now))
+      )
+    
+    if Map.get(body, "status") === "searching" do
+      send(self(), :try_matchmaking)
+    end
+
+    {:reply, :ok, socket}
   end
 
   # Channels can be used in a request/response fashion

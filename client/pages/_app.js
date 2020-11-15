@@ -5,9 +5,9 @@ import SocketProvider from "../src/contexts/SocketProvider";
 
 function MyApp({ Component, pageProps }) {
   return (
-    // <SocketProvider>
-    <Component {...pageProps} />
-    // </SocketProvider>
+    <SocketProvider>
+      <Component {...pageProps} />
+    </SocketProvider>
   );
 }
 
