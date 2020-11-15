@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 
@@ -11,7 +11,7 @@ Call.propTypes = {};
 
 export default function Call(props) {
   const { callItems, joinCall } = useContext(DailyContext);
-  const { room, presence } = useContext(SocketContext);
+  const { room, presence, updateSelf, uid } = useContext(SocketContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -21,20 +21,31 @@ export default function Call(props) {
       alert("NO ROOM");
       // router.push("/home");
     }
+    updateSelf({ status: "room" });
   }, []);
 
   useEffect(() => {
     debug("CALLITEMS", callItems);
   }, [callItems]);
 
-  useEffect(() => {
-    debug("PRESENCE", presence);
+  useEffect(() => {}, [presence]);
+
+  const uidToNameMap = useMemo(() => {
+    let nameMap = {};
+    for (let p of presence) {
+      for (let m of p.metas) {
+        nameMap[m.id] = m.name;
+      }
+    }
+    debug("NAMEMAP", nameMap);
+    return nameMap;
   }, [presence]);
 
   const items = Object.entries(callItems).map(([id, callItem]) => {
     return {
       id,
       ...callItem,
+      name: id === uid ? uidToNameMap[uid] : uidToNameMap[id],
     };
   });
   const item1 = items.length >= 1 ? items[0] : {};
@@ -45,30 +56,18 @@ export default function Call(props) {
   return (
     <div className="flex flex-1 flex-row justify-center align-middle bg-blue-300 h-3/5 w-full">
       {/* left third */}
-      <div className="flex flex-col mr-20 items-center">
-        <div className="pt-6">
-          <Video {...item1} />
-        </div>
-        <div className="pb-6 self-center">Name</div>
-        <div className="pt-6">
-          <Video {...item2} />
-        </div>
-        <div className="pb-6 self-center">Name</div>
+      <div className="flex flex-col mr-20 items-center my-6">
+        <Video {...item1} />
+        <Video {...item2} />
       </div>
 
       {/* centre third */}
       <Icebreakers />
 
       {/* right third */}
-      <div className="flex ml-20 flex-col items-center">
-        <div className="pt-6">
-          <Video {...item3} />
-        </div>
-        <div className="pb-6 self-center">Name</div>
-        <div className="pt-6">
-          <Video {...item4} />
-        </div>
-        <div className="pb-6 self-center">Name</div>
+      <div className="flex ml-20 flex-col items-center my-6">
+        <Video {...item3} />
+        <Video {...item4} />
       </div>
     </div>
   );
@@ -108,6 +107,7 @@ function Video(props) {
         }
       />
       {props.id !== "local" && <audio autoPlay playsInline ref={audioEl} />}
+      <div className="mb-6 self-center">{props.name}</div>
     </>
   );
 }

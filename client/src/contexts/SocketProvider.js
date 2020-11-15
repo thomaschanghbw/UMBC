@@ -40,6 +40,7 @@ export default function SocketProvider(props) {
 
     function updatePList(presence) {
       const pList = presence.list();
+      debug("P", pList);
       setPresence(pList);
     }
 
@@ -93,7 +94,7 @@ export default function SocketProvider(props) {
     if (room) {
       router.push("/dinner");
     } else {
-      router.push("/home");
+      // router.push("/home");
     }
   }, [room]);
 
@@ -109,6 +110,7 @@ export default function SocketProvider(props) {
         meetChannel,
         presence,
         room,
+        setRoom,
         updateSelf,
       }}
     >
